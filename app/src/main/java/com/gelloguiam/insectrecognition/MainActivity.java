@@ -16,61 +16,32 @@ public class MainActivity extends AppCompatActivity {
     private static final String LABEL_FILE = "file:///android_asset/labels.txt";
 
     static Classifier classifier;
-//    static Executor executor = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
+        setContentView(R.layout.activity_main);
 
         initTensorFlowAndLoadModel();
+        finish();
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        cameraView.start();
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        cameraView.stop();
-//        super.onPause();
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        executor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                classifier.close();
-//            }
-//        });
-//    }
-
     private void initTensorFlowAndLoadModel() {
-//        executor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-                try {
-                    classifier = TensorFlowImageClassifier.create(
-                            getAssets(),
-                            MODEL_FILE,
-                            LABEL_FILE,
-                            INPUT_SIZE,
-                            IMAGE_MEAN,
-                            IMAGE_STD,
-                            INPUT_NAME,
-                            OUTPUT_NAME);
-                    startCameraActivity();
-                } catch (final Exception e) {
-                    throw new RuntimeException("Error initializing TensorFlow!", e);
-                }
-            }
-//        });
-//    }
-
+        try {
+            classifier = TensorFlowImageClassifier.create(
+                    getAssets(),
+                    MODEL_FILE,
+                    LABEL_FILE,
+                    INPUT_SIZE,
+                    IMAGE_MEAN,
+                    IMAGE_STD,
+                    INPUT_NAME,
+                    OUTPUT_NAME);
+            startCameraActivity();
+        } catch (final Exception e) {
+            throw new RuntimeException("Error initializing TensorFlow!", e);
+        }
+    }
 
     private void startCameraActivity() {
         Intent intent = new Intent(this, CameraActivity.class);
