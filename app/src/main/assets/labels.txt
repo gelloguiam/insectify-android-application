@@ -1,0 +1,8 @@
+butterfly
+fly
+dragonfly
+wasp
+grasshopper
+cockroach
+bee
+beatle
