@@ -1,10 +1,12 @@
 package com.gelloguiam.insectrecognition;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,8 +19,12 @@ import java.util.List;
 
 public class CameraActivity extends AppCompatActivity {
 
+    static List<Classifier.Recognition> results;
+    static Bitmap bitmap;
+
     private TextView textViewResult;
     private Button btnDetectObject, btnToggleCamera;
+
     private ImageView imageViewResult;
     private CameraView cameraView;
 
@@ -27,10 +33,11 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+//        imageViewResult = (ImageView) findViewById(R.id.imageViewResult);
+//        textViewResult = (TextView) findViewById(R.id.textViewResult);
+//        textViewResult.setMovementMethod(new ScrollingMovementMethod());
+
         cameraView = (CameraView) findViewById(R.id.cameraView);
-        imageViewResult = (ImageView) findViewById(R.id.imageViewResult);
-        textViewResult = (TextView) findViewById(R.id.textViewResult);
-        textViewResult.setMovementMethod(new ScrollingMovementMethod());
 
         btnToggleCamera = (Button) findViewById(R.id.btnToggleCamera);
         btnDetectObject = (Button) findViewById(R.id.btnDetectObject);
@@ -40,17 +47,17 @@ public class CameraActivity extends AppCompatActivity {
             public void onPictureTaken(byte[] picture) {
                 super.onPictureTaken(picture);
 
-                Bitmap bitmap = BitmapFactory.decodeByteArray(picture, 0, picture.length);
+                bitmap = BitmapFactory.decodeByteArray(picture, 0, picture.length);
 
                 bitmap = Bitmap.createScaledBitmap(bitmap,
                         MainActivity.INPUT_SIZE,
                         MainActivity.INPUT_SIZE, false);
 
-                imageViewResult.setImageBitmap(bitmap);
+                results = MainActivity.classifier.recognizeImage(bitmap);
+                showResultFragment();
 
-                final List<Classifier.Recognition> results = MainActivity.classifier.recognizeImage(bitmap);
-
-                textViewResult.setText(results.toString());
+//                imageViewResult.setImageBitmap(bitmap);
+//                textViewResult.setText(results.toString());
             }
         });
 
@@ -70,4 +77,20 @@ public class CameraActivity extends AppCompatActivity {
 
         cameraView.start();
     }
+
+    public void showResultFragment() {
+        FragmentTransaction fragmentTransaction;
+        FragmentManager fragmentManager;
+
+        Fragment fragment = new ResultFragment();
+
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.fragment_wrapper, fragment);
+
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
 }

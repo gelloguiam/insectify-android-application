@@ -22,11 +22,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initTensorFlowAndLoadModel();
+        initializeModel();
         finish();
     }
 
-    private void initTensorFlowAndLoadModel() {
+    private void initializeModel() {
         try {
             classifier = TensorFlowImageClassifier.create(
                     getAssets(),
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     OUTPUT_NAME);
             startCameraActivity();
         } catch (final Exception e) {
-            throw new RuntimeException("Error initializing TensorFlow!", e);
+            throw new RuntimeException("Error initializing TensorFlow Model!", e);
         }
     }
 
