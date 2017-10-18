@@ -8,13 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 public class ResultFragment extends Fragment {
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_result, container, false);
     }
 
@@ -22,12 +18,16 @@ public class ResultFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceType) {
         super.onActivityCreated(savedInstanceType);
 
-        TextView text = (TextView) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.textViewResult);
+        TextView text = (TextView) getFragmentManager()
+            .findFragmentById(R.id.fragment_wrapper)
+            .getView()
+            .findViewById(R.id.textViewResult);
 //        text.setText(CameraActivity.results.toString());
 
-        ImageView image =  (ImageView) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.imageViewResult);
+        ImageView image =  (ImageView) getFragmentManager()
+            .findFragmentById(R.id.fragment_wrapper)
+            .getView()
+            .findViewById(R.id.imageViewResult);
 //        image.setImageBitmap(CameraActivity.bitmap);
-
     }
-
 }

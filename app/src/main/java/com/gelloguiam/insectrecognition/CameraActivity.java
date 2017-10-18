@@ -13,15 +13,8 @@ import android.widget.TextView;
 import java.util.List;
 
 public class CameraActivity extends AppCompatActivity {
-
     static List<Classifier.Recognition> results;
     static Bitmap bitmap;
-
-    private TextView textViewResult;
-    private ImageButton btnDetectObject, btnToggleCamera;
-
-    private ImageView imageViewResult;
-
     private static CameraFragment cameraFragment;
     private static Fragment resultFragment;
 
@@ -41,11 +34,8 @@ public class CameraActivity extends AppCompatActivity {
     public static void showResultFragment(Activity activity) {
         FragmentTransaction fragmentTransaction = activity.getFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-
         fragmentTransaction.replace(R.id.fragment_wrapper, resultFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
-
 }
