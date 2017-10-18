@@ -23,29 +23,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initializeModel();
-        finish();
     }
 
     private void initializeModel() {
-        try {
-            classifier = TensorFlowImageClassifier.create(
-                    getAssets(),
-                    MODEL_FILE,
-                    LABEL_FILE,
-                    INPUT_SIZE,
-                    IMAGE_MEAN,
-                    IMAGE_STD,
-                    INPUT_NAME,
-                    OUTPUT_NAME);
-            startCameraActivity();
-        } catch (final Exception e) {
-            throw new RuntimeException("Error initializing TensorFlow Model!", e);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    classifier = TensorFlowImageClassifier.create(
+                            getAssets(),
+                            MODEL_FILE,
+                            LABEL_FILE,
+                            INPUT_SIZE,
+                            IMAGE_MEAN,
+                            IMAGE_STD,
+                            INPUT_NAME,
+                            OUTPUT_NAME);
+                    startCameraActivity();
+                } catch (final Exception e) {
+                    throw new RuntimeException("Error initializing TensorFlow Model!", e);
+                }
+            }
+        }).start();
     }
 
     private void startCameraActivity() {
-        Intent intent = new Intent(this, CameraActivity.class);
-        startActivity(intent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                startActivity(intent);
+            }
+        }).start();
     }
 
 }

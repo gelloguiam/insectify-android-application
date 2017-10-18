@@ -18,11 +18,10 @@
                 android:padding="10dp" />
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/text_result"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/results_wrapper"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
-            android:gravity="bottom"
-            android:textColor="@android:color/black" />
+            android:orientation="vertical">
+        </LinearLayout>
 </LinearLayout>
