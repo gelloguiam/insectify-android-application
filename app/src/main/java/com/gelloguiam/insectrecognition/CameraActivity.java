@@ -6,15 +6,14 @@ import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CameraActivity extends AppCompatActivity {
     static List<Classifier.Recognition> results;
     static Bitmap bitmap;
+    static String hehe;
     private static CameraFragment cameraFragment;
     private static Fragment resultFragment;
 
@@ -22,6 +21,8 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        results = new ArrayList<>();
 
         cameraFragment = new CameraFragment();
         resultFragment = new ResultFragment();
