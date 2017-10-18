@@ -112,10 +112,10 @@ public class CameraFragment extends Fragment {
         openCamera.setLayoutParams(toggleButtonParams);
         openGallery.setLayoutParams(toggleButtonParams);
 
-        ViewGroup.LayoutParams captureButtonParams = btnDetectObject.getLayoutParams();
-        captureButtonParams.width = (int) (captureWrapperHeight * 0.5);
-        captureButtonParams.height = (int) (captureWrapperHeight * 0.5);
-        btnDetectObject.setLayoutParams(captureButtonParams);
+//        ViewGroup.LayoutParams captureButtonParams = btnDetectObject.getLayoutParams();
+//        captureButtonParams.width = (int) (captureWrapperHeight * 0.5);
+//        captureButtonParams.height = (int) (captureWrapperHeight * 0.5);
+//        btnDetectObject.setLayoutParams(captureButtonParams);
     }
 
 
