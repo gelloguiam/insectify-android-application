@@ -53,6 +53,7 @@ public class CameraFragment extends Fragment {
                         MainActivity.INPUT_SIZE, false);
 
                 CameraActivity.results = MainActivity.classifier.recognizeImage(CameraActivity.bitmap);
+                CameraActivity.showResultFragment(getActivity());
             }
         });
 
@@ -71,7 +72,6 @@ public class CameraFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 cameraView.captureImage();
-                CameraActivity.showResultFragment(getActivity());
             }
         });
 
@@ -112,10 +112,10 @@ public class CameraFragment extends Fragment {
         openCamera.setLayoutParams(toggleButtonParams);
         openGallery.setLayoutParams(toggleButtonParams);
 
-        ViewGroup.LayoutParams captureButtonParams = btnDetectObject.getLayoutParams();
-        captureButtonParams.width = (int) (captureWrapperHeight * 0.5);
-        captureButtonParams.height = (int) (captureWrapperHeight * 0.5);
-        btnDetectObject.setLayoutParams(captureButtonParams);
+//        ViewGroup.LayoutParams captureButtonParams = btnDetectObject.getLayoutParams();
+//        captureButtonParams.width = (int) (captureWrapperHeight * 0.5);
+//        captureButtonParams.height = (int) (captureWrapperHeight * 0.5);
+//        btnDetectObject.setLayoutParams(captureButtonParams);
     }
 
 
