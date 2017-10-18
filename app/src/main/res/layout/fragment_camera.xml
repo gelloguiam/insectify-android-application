@@ -1,33 +1,80 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gelloguiam.insectrecognition.CameraFragment">
+    tools:context="com.gelloguiam.insectrecognition.CameraFragment"
+    android:orientation="vertical">
 
-    <com.flurgle.camerakit.CameraView
-        android:id="@+id/cameraView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center|top"
-        android:layout_marginTop="20dp" />
-
-    <Button
-        android:id="@+id/btnToggleCamera"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="50dp"
-        android:text="Toggle Camera"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black" />
+        android:layout_height="wrap_content"
+        android:id="@+id/live_camera_wrapper">
 
-    <Button
-        android:id="@+id/btnDetectObject"
+        <com.flurgle.camerakit.CameraView
+            android:id="@+id/live_camera"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="top|center">
+
+        </com.flurgle.camerakit.CameraView>
+
+        <ImageButton
+            android:id="@+id/btnToggleCamera"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:contentDescription="swap"
+            android:scaleType="fitXY"
+            android:src="@drawable/swap" />
+
+    </FrameLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|center"
-        android:text="Recognize Insect"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black" />
+        android:layout_height="100dp"
+        android:id="@+id/capture_button_wrapper">
 
-</FrameLayout>
+        <ImageButton
+            android:id="@+id/btnDetectObject"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:src="@drawable/capture"
+            android:contentDescription="capture"
+            android:scaleType="fitXY" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/gallery_camera_toggle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whitePrimary">
+
+        <Button
+            android:id="@+id/open_gallery"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gallery"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/open_camera"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/camera"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+
+</LinearLayout>

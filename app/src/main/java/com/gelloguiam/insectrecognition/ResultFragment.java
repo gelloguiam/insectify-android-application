@@ -10,20 +10,24 @@ import android.widget.TextView;
 
 
 public class ResultFragment extends Fragment {
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_result, container, false);
+        return inflater.inflate(R.layout.fragment_result, container, false);
+    }
 
-        TextView text = (TextView) view.findViewById(R.id.textViewResult);
-        text.setText(CameraActivity.results.toString());
+    @Override
+    public void onActivityCreated(Bundle savedInstanceType) {
+        super.onActivityCreated(savedInstanceType);
 
-        ImageView image =  (ImageView) view.findViewById(R.id.imageViewResult);
-        image.setImageBitmap(CameraActivity.bitmap);
+        TextView text = (TextView) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.textViewResult);
+//        text.setText(CameraActivity.results.toString());
 
-        return view;
+        ImageView image =  (ImageView) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.imageViewResult);
+//        image.setImageBitmap(CameraActivity.bitmap);
+
     }
 
 }
