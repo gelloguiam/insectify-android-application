@@ -82,6 +82,18 @@ public class CameraFragment extends Fragment {
         cameraView.start();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        cameraView.stop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cameraView.start();
+    }
+
     public void fixLayoutSize() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
