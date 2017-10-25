@@ -23,7 +23,6 @@ public class CameraActivity extends AppCompatActivity {
 
     static TextToSpeech agent;
 
-
     private FragmentManager fragmentManager;
 
     @Override
@@ -47,13 +46,11 @@ public class CameraActivity extends AppCompatActivity {
 
         cameraFragment = new CameraFragment();
         resultFragment = new ResultFragment();
-
         fragmentManager = getFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_wrapper, cameraFragment);
         fragmentTransaction.commit();
-
     }
 
     public static void showResultFragment(Activity activity) {
@@ -65,10 +62,6 @@ public class CameraActivity extends AppCompatActivity {
         resultsShown = true;
     }
 
-    public void showCameraFragment() {
-
-    }
-
     @Override
     public void onBackPressed() {
         Toast.makeText(this, "Back Pressed!." + fragmentManager.getBackStackEntryCount(), Toast.LENGTH_LONG).show();
@@ -76,7 +69,6 @@ public class CameraActivity extends AppCompatActivity {
         if(fragmentManager.getBackStackEntryCount() != 0) {
             fragmentManager.popBackStack();
             if(resultsShown) {
-//                showCameraFragment();
                 resultsShown = false;
             }
             else {
@@ -84,7 +76,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
         else {
-            super.onBackPressed();
+            finish();
         }
     }
 

@@ -55,7 +55,7 @@
         android:id="@+id/gallery_camera_toggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/whitePrimary">
+        android:background="@color/white">
 
         <Button
             android:id="@+id/open_gallery"
