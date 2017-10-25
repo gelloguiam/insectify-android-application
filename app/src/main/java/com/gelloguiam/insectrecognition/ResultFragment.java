@@ -8,9 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+
+import java.util.LinkedList;
 
 public class ResultFragment extends Fragment {
 
@@ -28,11 +29,11 @@ public class ResultFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceType) {
         super.onActivityCreated(savedInstanceType);
 
-        ImageView image =  (ImageView) getFragmentManager()
-            .findFragmentById(R.id.fragment_wrapper)
-            .getView()
-            .findViewById(R.id.image_captured_preview);
-        image.setImageBitmap(CameraActivity.bitmap);
+//        ImageView image =  (ImageView) getFragmentManager()
+//            .findFragmentById(R.id.fragment_wrapper)
+//            .getView()
+//            .findViewById(R.id.image_captured_preview);
+//        image.setImageBitmap(CameraActivity.bitmap);
 
         fixLayoutSize();
         renderResult();
@@ -45,15 +46,15 @@ public class ResultFragment extends Fragment {
         int screenHeight = displayMetrics.heightPixels;
         int screenWidth = displayMetrics.widthPixels;
 
-        FrameLayout previewWrapper = (FrameLayout) getFragmentManager().
-                findFragmentById(R.id.fragment_wrapper).
-                getView().
-                findViewById(R.id.image_captured_preview_wrapper);
-
-        ViewGroup.LayoutParams previewWrapperParams = previewWrapper.getLayoutParams();
-        previewWrapperParams.height = screenWidth;
-        previewWrapperParams.width = screenWidth;
-        previewWrapper .setLayoutParams(previewWrapperParams);
+//        FrameLayout previewWrapper = (FrameLayout) getFragmentManager().
+//                findFragmentById(R.id.fragment_wrapper).
+//                getView().
+//                findViewById(R.id.image_captured_preview_wrapper);
+//
+//        ViewGroup.LayoutParams previewWrapperParams = previewWrapper.getLayoutParams();
+//        previewWrapperParams.height = screenWidth;
+//        previewWrapperParams.width = screenWidth;
+//        previewWrapper .setLayoutParams(previewWrapperParams);
     }
 
     public void renderResult() {
@@ -61,6 +62,26 @@ public class ResultFragment extends Fragment {
                 findFragmentById(R.id.fragment_wrapper).
                 getView().
                 findViewById(R.id.results_wrapper);
+
+        ProgressBar PB1 = (ProgressBar) getFragmentManager().
+                findFragmentById(R.id.fragment_wrapper).
+                getView().
+                findViewById(R.id.PB1);
+
+        ProgressBar PB2 = (ProgressBar) getFragmentManager().
+                findFragmentById(R.id.fragment_wrapper).
+                getView().
+                findViewById(R.id.PB2);
+
+        ProgressBar PB3 = (ProgressBar) getFragmentManager().
+                findFragmentById(R.id.fragment_wrapper).
+                getView().
+                findViewById(R.id.PB3);
+
+        LinkedList<ProgressBar> progressBars = new LinkedList<ProgressBar>();
+        progressBars.add(PB1);
+        progressBars.add(PB2);
+        progressBars.add(PB3);
 
         int resultsCount = CameraActivity.results.size();
         for(int i=0; i<resultsCount; i++) {
@@ -74,11 +95,14 @@ public class ResultFragment extends Fragment {
                 }
             });
 
+            float confidence = output.getConfidence() * 100;
             result.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
-            result.setText(output.getTitle() + " (" + output.getConfidence() + ")");
+            result.setText(output.getTitle() + " (" + confidence + ")");
             resultWrapper.addView(result);
+
+            progressBars.get(i).setProgress((int) Math.ceil(confidence));
         }
     }
 

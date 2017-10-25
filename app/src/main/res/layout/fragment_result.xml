@@ -6,17 +6,17 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/image_captured_preview_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="300dp">
+        <!--<FrameLayout-->
+            <!--android:id="@+id/image_captured_preview_wrapper"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="300dp">-->
 
-            <ImageView
-                android:id="@+id/image_captured_preview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp" />
-        </FrameLayout>
+            <!--<ImageView-->
+                <!--android:id="@+id/image_captured_preview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:padding="10dp" />-->
+        <!--</FrameLayout>-->
 
         <LinearLayout
             android:id="@+id/results_wrapper"
@@ -24,4 +24,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/PB1"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:max="100"
+                android:padding="5dp"
+                android:progress="20"
+                android:progressTint="@color/red"
+                android:secondaryProgressTint="@color/black" />
+
+            <ProgressBar
+                android:id="@+id/PB2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:max="100" />
+
+            <ProgressBar
+                android:id="@+id/PB3"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:max="100" />
+
+        </LinearLayout>
+
 </LinearLayout>
