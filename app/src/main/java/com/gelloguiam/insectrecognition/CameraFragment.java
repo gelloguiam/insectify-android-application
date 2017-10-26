@@ -3,7 +3,6 @@ package com.gelloguiam.insectrecognition;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -58,7 +57,6 @@ public class CameraFragment extends Fragment {
         });
 
         btnToggleCamera = (ImageButton) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.btnToggleCamera);
-        btnToggleCamera.setBackgroundColor(Color.TRANSPARENT);
         btnToggleCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +65,6 @@ public class CameraFragment extends Fragment {
         });
 
         btnDetectObject = (ImageButton) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.btnDetectObject);
-        btnDetectObject.setBackgroundColor(Color.TRANSPARENT);
         btnDetectObject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +76,18 @@ public class CameraFragment extends Fragment {
         openCamera = (Button) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.open_camera);
 
         fixLayoutSize();
+        cameraView.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        cameraView.stop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         cameraView.start();
     }
 
@@ -111,12 +120,5 @@ public class CameraFragment extends Fragment {
 
         openCamera.setLayoutParams(toggleButtonParams);
         openGallery.setLayoutParams(toggleButtonParams);
-
-//        ViewGroup.LayoutParams captureButtonParams = btnDetectObject.getLayoutParams();
-//        captureButtonParams.width = (int) (captureWrapperHeight * 0.5);
-//        captureButtonParams.height = (int) (captureWrapperHeight * 0.5);
-//        btnDetectObject.setLayoutParams(captureButtonParams);
     }
-
-
 }
