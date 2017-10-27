@@ -28,7 +28,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:contentDescription="swap"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
+            android:background="@null"
+            android:padding="0dp"
             android:src="@drawable/swap" />
 
     </FrameLayout>
@@ -47,7 +49,10 @@
             android:gravity="center"
             android:src="@drawable/capture"
             android:contentDescription="capture"
-            android:scaleType="fitXY" />
+            android:foregroundGravity="center"
+            android:background="@null"
+            android:padding="0dp"
+            android:scaleType="centerInside" />
 
     </RelativeLayout>
 
