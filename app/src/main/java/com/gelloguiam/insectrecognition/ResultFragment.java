@@ -9,9 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-
-import java.util.LinkedList;
 
 public class ResultFragment extends Fragment {
 
@@ -63,35 +60,15 @@ public class ResultFragment extends Fragment {
                 getView().
                 findViewById(R.id.results_wrapper);
 
-        ProgressBar PB1 = (ProgressBar) getFragmentManager().
-                findFragmentById(R.id.fragment_wrapper).
-                getView().
-                findViewById(R.id.PB1);
-
-        ProgressBar PB2 = (ProgressBar) getFragmentManager().
-                findFragmentById(R.id.fragment_wrapper).
-                getView().
-                findViewById(R.id.PB2);
-
-        ProgressBar PB3 = (ProgressBar) getFragmentManager().
-                findFragmentById(R.id.fragment_wrapper).
-                getView().
-                findViewById(R.id.PB3);
-
-        LinkedList<ProgressBar> progressBars = new LinkedList<ProgressBar>();
-        progressBars.add(PB1);
-        progressBars.add(PB2);
-        progressBars.add(PB3);
-
         int resultsCount = CameraActivity.results.size();
         for(int i=0; i<resultsCount; i++) {
-            Classifier.Recognition output = CameraActivity.results.get(i);
+            final Classifier.Recognition output = CameraActivity.results.get(i);
             Button result = new Button(getActivity());
 
             result.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openInsectWiki("title");
+                    openInsectWiki(output.getTitle());
                 }
             });
 
@@ -101,13 +78,12 @@ public class ResultFragment extends Fragment {
                     ViewGroup.LayoutParams.WRAP_CONTENT));
             result.setText(output.getTitle() + " (" + confidence + ")");
             resultWrapper.addView(result);
-
-            progressBars.get(i).setProgress((int) Math.ceil(confidence));
         }
     }
 
     public void openInsectWiki(String insect) {
         Intent intent = new Intent(getActivity(), InsectWiki.class);
+        intent.putExtra("name", insect);
         startActivity(intent);
     }
 }

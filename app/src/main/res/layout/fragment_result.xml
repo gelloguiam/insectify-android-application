@@ -25,36 +25,4 @@
             android:orientation="vertical">
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ProgressBar
-                android:id="@+id/PB1"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:max="100"
-                android:padding="5dp"
-                android:progress="20"
-                android:progressTint="@color/red"
-                android:secondaryProgressTint="@color/black" />
-
-            <ProgressBar
-                android:id="@+id/PB2"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:max="100" />
-
-            <ProgressBar
-                android:id="@+id/PB3"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:max="100" />
-
-        </LinearLayout>
-
 </LinearLayout>
