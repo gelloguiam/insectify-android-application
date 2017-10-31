@@ -6,12 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.gelloguiam.insectrecognition.InsectWiki"
-    tools:showIn="@layout/activity_insect_wiki">
+    tools:showIn="@layout/activity_insect_wiki"
+    android:id="@+id/wiki_wrapper">
 
-    <WebView
-        android:id="@+id/insect_wiki"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
 </FrameLayout>
