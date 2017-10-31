@@ -7,13 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-
 public class LocalWikiFragment extends Fragment {
-
     private ImageButton readMore;
-
-    public LocalWikiFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

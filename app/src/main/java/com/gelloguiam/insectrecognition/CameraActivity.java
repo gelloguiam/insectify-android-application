@@ -15,14 +15,13 @@ import java.util.List;
 import java.util.Locale;
 
 public class CameraActivity extends AppCompatActivity {
-    static List<Classifier.Recognition> results;
     static Bitmap bitmap;
     static boolean resultsShown;
-    private static CameraFragment cameraFragment;
-    private static Fragment resultFragment;
-
+    static List<Classifier.Recognition> results;
     static TextToSpeech agent;
 
+    private static Fragment resultFragment;
+    private static Fragment cameraFragment;
     private FragmentManager fragmentManager;
 
     @Override
@@ -41,7 +40,6 @@ public class CameraActivity extends AppCompatActivity {
 
         String text = "Hello World!, The results are the following.";
         agent.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-
         results = new ArrayList<>();
 
         cameraFragment = new CameraFragment();
@@ -79,5 +77,4 @@ public class CameraActivity extends AppCompatActivity {
             finish();
         }
     }
-
 }

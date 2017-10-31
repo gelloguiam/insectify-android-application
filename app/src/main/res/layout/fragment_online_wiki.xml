@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.gelloguiam.insectrecognition.OnlineWikiFragment">
-
     <WebView
         android:id="@+id/insect_wiki"
         android:layout_width="match_parent"
@@ -11,5 +10,4 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         android:background="@color/white"/>
-
 </FrameLayout>
