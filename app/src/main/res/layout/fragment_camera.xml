@@ -10,15 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/live_camera_wrapper">
-
         <com.flurgle.camerakit.CameraView
             android:id="@+id/live_camera"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_gravity="top|center">
-
         </com.flurgle.camerakit.CameraView>
-
         <ImageButton
             android:id="@+id/btnToggleCamera"
             android:layout_width="48dp"
@@ -32,14 +29,12 @@
             android:background="@null"
             android:padding="0dp"
             android:src="@drawable/swap" />
-
     </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/capture_button_wrapper">
-
         <ImageButton
             android:id="@+id/btnDetectObject"
             android:layout_width="100dp"
@@ -53,7 +48,6 @@
             android:background="@null"
             android:padding="0dp"
             android:scaleType="centerInside" />
-
     </RelativeLayout>
 
     <LinearLayout
@@ -61,7 +55,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
-
         <Button
             android:id="@+id/open_gallery"
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -70,7 +63,6 @@
             android:text="@string/gallery"
             android:textAllCaps="false"
             android:textColor="@android:color/black" />
-
         <Button
             android:id="@+id/open_camera"
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -79,7 +71,6 @@
             android:text="@string/camera"
             android:textAllCaps="false"
             android:textColor="@android:color/black" />
-
     </LinearLayout>
 
 </LinearLayout>

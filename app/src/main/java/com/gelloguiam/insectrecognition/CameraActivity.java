@@ -8,45 +8,33 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class CameraActivity extends AppCompatActivity {
-    static List<Classifier.Recognition> results;
     static Bitmap bitmap;
     static boolean resultsShown;
-    private static CameraFragment cameraFragment;
+    static List<Classifier.Recognition> results;
+
     private static Fragment resultFragment;
-
-    static TextToSpeech agent;
-
+    private static Fragment cameraFragment;
     private FragmentManager fragmentManager;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        agent = new TextToSpeech(getApplication(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    agent.setLanguage(Locale.US);
-                }
-            }
-        });
-
-        String text = "Hello World!, The results are the following.";
-        agent.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-
         results = new ArrayList<>();
-
         cameraFragment = new CameraFragment();
         resultFragment = new ResultFragment();
         fragmentManager = getFragmentManager();
+
+        initializeTTS();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_wrapper, cameraFragment);
@@ -62,10 +50,37 @@ public class CameraActivity extends AppCompatActivity {
         resultsShown = true;
     }
 
+    protected void initializeTTS() {
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.US);
+                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.e("error", "Language not supported.");
+                    } else {
+                        String text = "This is Insectify, your insect identification buddy.";
+                        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                }
+                else {
+                    Log.e("error", "Initilization failed.");
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "Back Pressed!." + fragmentManager.getBackStackEntryCount(), Toast.LENGTH_LONG).show();
-
         if(fragmentManager.getBackStackEntryCount() != 0) {
             fragmentManager.popBackStack();
             if(resultsShown) {
@@ -79,5 +94,4 @@ public class CameraActivity extends AppCompatActivity {
             finish();
         }
     }
-
 }

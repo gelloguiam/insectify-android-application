@@ -1,19 +1,3 @@
-/*
- *    Copyright (C) 2017 MINDORKS NEXTGEN PRIVATE LIMITED
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- */
-
 package com.gelloguiam.insectrecognition;
 
 import android.content.res.AssetManager;
@@ -32,19 +16,12 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
-/**
- * Created by amitshekhar on 06/03/17.
- */
-
-/**
- * A classifier specialized to label images using TensorFlow.
- */
 public class TensorFlowImageClassifier implements Classifier {
 
     private static final String TAG = "TensorFlowImageClassifier";
 
     // Only return this many results with at least this confidence.
-    private static final int MAX_RESULTS = 3;
+    private static final int MAX_RESULTS = 10;
     private static final float THRESHOLD = 0.0f;
 
     // Config values.
@@ -166,7 +143,7 @@ public class TensorFlowImageClassifier implements Classifier {
         // Find the best classifications.
         PriorityQueue<Recognition> pq =
                 new PriorityQueue<Recognition>(
-                        3,
+                        10,
                         new Comparator<Recognition>() {
                             @Override
                             public int compare(Recognition lhs, Recognition rhs) {

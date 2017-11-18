@@ -13,17 +13,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.flurgle.camerakit.CameraKit;
 import com.flurgle.camerakit.CameraListener;
 import com.flurgle.camerakit.CameraView;
 
-
 public class CameraFragment extends Fragment {
-
+    private Button openCamera;
+    private Button openGallery;
     private CameraView cameraView;
     private ImageButton btnToggleCamera;
     private ImageButton btnDetectObject;
-    private Button openGallery;
-    private Button openCamera;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,23 +39,38 @@ public class CameraFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceType) {
         super.onActivityCreated(savedInstanceType);
 
-        cameraView = (CameraView) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.live_camera);
+        cameraView = (CameraView) getFragmentManager()
+            .findFragmentById(R.id.fragment_wrapper)
+            .getView()
+            .findViewById(R.id.live_camera);
+
+        cameraView.setFocus(CameraKit.Constants.FOCUS_TAP);
+        
         cameraView.setCameraListener(new CameraListener() {
             @Override
             public void onPictureTaken(byte[] picture) {
                 super.onPictureTaken(picture);
 
-                CameraActivity.bitmap = BitmapFactory.decodeByteArray(picture, 0, picture.length);
-                CameraActivity.bitmap = Bitmap.createScaledBitmap(CameraActivity.bitmap,
+                CameraActivity.bitmap = BitmapFactory.decodeByteArray(
+                        picture,
+                        0,
+                        picture.length);
+                CameraActivity.bitmap = Bitmap.createScaledBitmap(
+                        CameraActivity.bitmap,
                         MainActivity.INPUT_SIZE,
-                        MainActivity.INPUT_SIZE, false);
+                        MainActivity.INPUT_SIZE,
+                        false);
 
                 CameraActivity.results = MainActivity.classifier.recognizeImage(CameraActivity.bitmap);
                 CameraActivity.showResultFragment(getActivity());
             }
         });
 
-        btnToggleCamera = (ImageButton) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.btnToggleCamera);
+        btnToggleCamera = (ImageButton) getFragmentManager()
+            .findFragmentById(R.id.fragment_wrapper)
+            .getView()
+            .findViewById(R.id.btnToggleCamera);
+
         btnToggleCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +78,11 @@ public class CameraFragment extends Fragment {
             }
         });
 
-        btnDetectObject = (ImageButton) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.btnDetectObject);
+        btnDetectObject = (ImageButton) getFragmentManager()
+            .findFragmentById(R.id.fragment_wrapper)
+            .getView()
+            .findViewById(R.id.btnDetectObject);
+
         btnDetectObject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,8 +116,14 @@ public class CameraFragment extends Fragment {
         int screenHeight = displayMetrics.heightPixels;
         int screenWidth = displayMetrics.widthPixels;
 
-        RelativeLayout captureButtonWrapper = (RelativeLayout) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.capture_button_wrapper);
-        LinearLayout galleryCameraToggle = (LinearLayout) getFragmentManager().findFragmentById(R.id.fragment_wrapper).getView().findViewById(R.id.gallery_camera_toggle);
+        RelativeLayout captureButtonWrapper = (RelativeLayout) getFragmentManager()
+            .findFragmentById(R.id.fragment_wrapper)
+            .getView()
+            .findViewById(R.id.capture_button_wrapper);
+        LinearLayout galleryCameraToggle = (LinearLayout) getFragmentManager()
+            .findFragmentById(R.id.fragment_wrapper)
+            .getView()
+            .findViewById(R.id.gallery_camera_toggle);
 
         ViewGroup.LayoutParams cameraViewParams = cameraView.getLayoutParams();
         cameraViewParams.height = screenWidth;
