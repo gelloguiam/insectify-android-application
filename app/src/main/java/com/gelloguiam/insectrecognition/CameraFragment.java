@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.flurgle.camerakit.CameraKit;
 import com.flurgle.camerakit.CameraListener;
 import com.flurgle.camerakit.CameraView;
 
@@ -43,6 +44,8 @@ public class CameraFragment extends Fragment {
             .getView()
             .findViewById(R.id.live_camera);
 
+        cameraView.setFocus(CameraKit.Constants.FOCUS_TAP);
+        
         cameraView.setCameraListener(new CameraListener() {
             @Override
             public void onPictureTaken(byte[] picture) {

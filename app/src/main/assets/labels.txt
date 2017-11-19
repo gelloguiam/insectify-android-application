@@ -3,6 +3,8 @@ fly
 dragonfly
 wasp
 grasshopper
-cockroach
+mantis
 bee
-beatle
+cicada
+cockroach
+beetle

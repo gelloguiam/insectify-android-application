@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,33 +18,24 @@ public class CameraActivity extends AppCompatActivity {
     static Bitmap bitmap;
     static boolean resultsShown;
     static List<Classifier.Recognition> results;
-    static TextToSpeech agent;
 
     private static Fragment resultFragment;
     private static Fragment cameraFragment;
     private FragmentManager fragmentManager;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        agent = new TextToSpeech(getApplication(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    agent.setLanguage(Locale.US);
-                }
-            }
-        });
-
-        String text = "Hello World!, The results are the following.";
-        agent.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         results = new ArrayList<>();
 
         cameraFragment = new CameraFragment();
         resultFragment = new ResultFragment();
         fragmentManager = getFragmentManager();
+
+        initializeTTS();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_wrapper, cameraFragment);
@@ -60,10 +51,39 @@ public class CameraActivity extends AppCompatActivity {
         resultsShown = true;
     }
 
+
+    protected void initializeTTS() {
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS){
+                    int result = tts.setLanguage(Locale.US);
+                    if(result == TextToSpeech.LANG_MISSING_DATA ||
+                            result == TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.e("error", "This Language is not supported");
+                    } else {
+                        String welcomeText = "This is Insectify, your insect identification buddy.";
+                        tts.speak(welcomeText, TextToSpeech.QUEUE_ADD, null);
+                    }
+                }
+                else {
+                    Log.e("error", "Initilization Failed!");
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "Back Pressed!." + fragmentManager.getBackStackEntryCount(), Toast.LENGTH_LONG).show();
-
         if(fragmentManager.getBackStackEntryCount() != 0) {
             fragmentManager.popBackStack();
             if(resultsShown) {
