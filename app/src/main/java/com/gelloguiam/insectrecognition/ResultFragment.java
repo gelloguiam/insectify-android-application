@@ -2,6 +2,7 @@ package com.gelloguiam.insectrecognition;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.DisplayMetrics;
@@ -10,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.List;
 import java.util.Locale;
 
 public class ResultFragment extends Fragment {
@@ -31,9 +34,6 @@ public class ResultFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceType) {
         super.onActivityCreated(savedInstanceType);
 
-        final Classifier.Recognition output = CameraActivity.results.get(0);
-        initializeTTS(output.getTitle(), Math.round(output.getConfidence() * 100));
-
         fixLayoutSize();
         renderResult();
     }
@@ -44,32 +44,57 @@ public class ResultFragment extends Fragment {
 
         int screenHeight = displayMetrics.heightPixels;
         int screenWidth = displayMetrics.widthPixels;
+
+        ImageView preview = (ImageView) getFragmentManager().
+                findFragmentById(R.id.fragment_wrapper).
+                getView().
+                findViewById(R.id.image_captured_preview);
+
+        preview.setImageBitmap(ImageHelper.getRoundedImage(CameraActivity.bitmap, 1000));
     }
 
     public void renderResult() {
+        final List<Classifier.Recognition> results = CameraActivity.results;
+        initializeTTS(results.get(0).getTitle(), Math.round(results.get(0).getConfidence() * 100));
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        int screenHeight = displayMetrics.heightPixels;
+        int screenWidth = displayMetrics.widthPixels;
+
         LinearLayout resultWrapper = (LinearLayout) getFragmentManager().
                 findFragmentById(R.id.fragment_wrapper).
                 getView().
                 findViewById(R.id.results_wrapper);
 
+        int[] id = new int[3];
+        id[0] = R.id.guess_1;
+        id[1] = R.id.guess_2;
+        id[2] = R.id.guess_3;
+
+        Typeface bebas = Typeface.createFromAsset(getActivity().getAssets(), "font/bebas.otf");
+
         int resultsCount = CameraActivity.results.size();
         for(int i=0; i<resultsCount; i++) {
-            final Classifier.Recognition output = CameraActivity.results.get(i);
-            Button result = new Button(getActivity());
+            final Classifier.Recognition label = results.get(i);
+            Button result = (Button) getFragmentManager().
+                    findFragmentById(R.id.fragment_wrapper).
+                    getView().
+                    findViewById(id[i]);
 
             result.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openInsectWiki(output.getTitle());
+                    openInsectWiki(label.getTitle());
                 }
             });
 
-            float confidence = output.getConfidence() * 100;
-            result.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            result.setText(output.getTitle() + " (" + confidence + ")");
-            resultWrapper.addView(result);
+            result.getLayoutParams().width = (int) (screenWidth * 0.6);
+
+            int confidence = Math.round(label.getConfidence() * 100);
+            result.setText(label.getTitle() + " (" + confidence + "%)");
+            result.setTypeface(bebas);
         }
     }
 

@@ -2,6 +2,7 @@ package com.gelloguiam.insectrecognition;
 
 import android.app.Fragment;
 import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
@@ -53,12 +54,16 @@ public class LocalWikiFragment extends Fragment {
 
         initializeTTS(contents.toString());
 
+        Typeface bebas = Typeface.createFromAsset(getActivity().getAssets(), "font/bebas.otf");
+        Typeface liberation = Typeface.createFromAsset(getActivity().getAssets(), "font/liberation.ttf");
+
         TextView title = (TextView) getFragmentManager().
                 findFragmentById(R.id.wiki_wrapper).
                 getView().
                 findViewById(R.id.local_wiki_title);
 
         title.setText(InsectWiki.subject.toUpperCase());
+        title.setTypeface(bebas);
 
         wiki = (TextView) getFragmentManager().
                 findFragmentById(R.id.wiki_wrapper).
@@ -67,6 +72,7 @@ public class LocalWikiFragment extends Fragment {
 
         wiki.setText(contents.toString());
         wiki.setMovementMethod(new ScrollingMovementMethod());
+        wiki.setTypeface(liberation);
 
         readMore = (ImageButton) getFragmentManager().
                 findFragmentById(R.id.wiki_wrapper).

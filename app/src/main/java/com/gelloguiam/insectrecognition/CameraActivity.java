@@ -6,13 +6,10 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class CameraActivity extends AppCompatActivity {
     static Bitmap bitmap;
@@ -22,7 +19,9 @@ public class CameraActivity extends AppCompatActivity {
     private static Fragment resultFragment;
     private static Fragment cameraFragment;
     private FragmentManager fragmentManager;
-    private TextToSpeech tts;
+
+    int IMAGE_PICKER_SELECT = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +32,6 @@ public class CameraActivity extends AppCompatActivity {
         cameraFragment = new CameraFragment();
         resultFragment = new ResultFragment();
         fragmentManager = getFragmentManager();
-
-        initializeTTS();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_wrapper, cameraFragment);
@@ -50,33 +47,9 @@ public class CameraActivity extends AppCompatActivity {
         resultsShown = true;
     }
 
-    protected void initializeTTS() {
-        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.US);
-                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
-                        Log.e("error", "Language not supported.");
-                    } else {
-                        String text = "This is Insectify, your insect identification buddy.";
-                        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-                    }
-                }
-                else {
-                    Log.e("error", "Initilization failed.");
-                }
-            }
-        });
-    }
-
     @Override
-    protected void onDestroy() {
-        if(tts != null) {
-            tts.stop();
-            tts.shutdown();
-        }
-        super.onDestroy();
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
