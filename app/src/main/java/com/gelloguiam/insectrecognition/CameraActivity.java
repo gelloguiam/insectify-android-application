@@ -30,7 +30,6 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         results = new ArrayList<>();
-
         cameraFragment = new CameraFragment();
         resultFragment = new ResultFragment();
         fragmentManager = getFragmentManager();
@@ -51,23 +50,21 @@ public class CameraActivity extends AppCompatActivity {
         resultsShown = true;
     }
 
-
     protected void initializeTTS() {
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status == TextToSpeech.SUCCESS){
+                if(status == TextToSpeech.SUCCESS) {
                     int result = tts.setLanguage(Locale.US);
-                    if(result == TextToSpeech.LANG_MISSING_DATA ||
-                            result == TextToSpeech.LANG_NOT_SUPPORTED){
-                        Log.e("error", "This Language is not supported");
+                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.e("error", "Language not supported.");
                     } else {
-                        String welcomeText = "This is Insectify, your insect identification buddy.";
-                        tts.speak(welcomeText, TextToSpeech.QUEUE_ADD, null);
+                        String text = "This is Insectify, your insect identification buddy.";
+                        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
                     }
                 }
                 else {
-                    Log.e("error", "Initilization Failed!");
+                    Log.e("error", "Initilization failed.");
                 }
             }
         });

@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 
 public class LocalWikiFragment extends Fragment {
-    private static final String LABEL_FILE = "file:///android_asset/";
     private ImageButton readMore;
     private TextView wiki;
     private TextToSpeech tts;
@@ -36,14 +35,15 @@ public class LocalWikiFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceType) {
         super.onActivityCreated(savedInstanceType);
-        String local_file = InsectWiki.subject + ".txt";
+
         AssetManager assetManager = getActivity().getAssets();
-        String contents = "";
+        String wikiFile = "wiki/" + InsectWiki.subject + ".txt";
         String wikiTitle = InsectWiki.subject;
+        String contents = "";
 
         try {
             BufferedReader br = null;
-            br = new BufferedReader(new InputStreamReader(assetManager.open(local_file)));
+            br = new BufferedReader(new InputStreamReader(assetManager.open(wikiFile)));
             String line;
             while ((line = br.readLine()) != null) {
                 contents += line + "\n";
@@ -59,7 +59,6 @@ public class LocalWikiFragment extends Fragment {
                 findViewById(R.id.local_wiki_title);
 
         title.setText(InsectWiki.subject.toUpperCase());
-
 
         wiki = (TextView) getFragmentManager().
                 findFragmentById(R.id.wiki_wrapper).
@@ -86,17 +85,16 @@ public class LocalWikiFragment extends Fragment {
         tts = new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status == TextToSpeech.SUCCESS){
+                if(status == TextToSpeech.SUCCESS) {
                     int result = tts.setLanguage(Locale.US);
-                    if(result == TextToSpeech.LANG_MISSING_DATA ||
-                            result == TextToSpeech.LANG_NOT_SUPPORTED){
-                        Log.e("error", "This Language is not supported");
+                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("error", "Language not supported.");
                     } else {
                         tts.speak(text, TextToSpeech.QUEUE_ADD, null);
                     }
                 }
                 else {
-                    Log.e("error", "Initilization Failed!");
+                    Log.e("error", "TTS Initilization failed.");
                 }
             }
         });
@@ -110,5 +108,4 @@ public class LocalWikiFragment extends Fragment {
         }
         super.onDestroy();
     }
-
 }
