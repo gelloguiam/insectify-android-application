@@ -17,11 +17,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String OUTPUT_NAME = "final_result";
     private static final String MODEL_FILE = "file:///android_asset/graph.pb";
     private static final String LABEL_FILE = "file:///android_asset/labels.txt";
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeTTS();
         initializeModel();
     }
 
@@ -55,6 +57,45 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }).start();
+    }
+
+
+    protected void initializeTTS() {
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if (status == TextToSpeech.SUCCESS) {
+                            int result = tts.setLanguage(Locale.US);
+                            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                                Log.e("error", "Language not supported.");
+                            } else {
+                                String text = "This is Insectify, your insect identification buddy.";
+                                tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                            }
+                        } else {
+                            Log.e("error", "Initilization failed.");
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        finish();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
         finish();
     }
 }

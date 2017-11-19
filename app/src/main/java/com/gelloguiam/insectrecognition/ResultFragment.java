@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.Locale;
@@ -44,18 +45,39 @@ public class ResultFragment extends Fragment {
 
         int screenHeight = displayMetrics.heightPixels;
         int screenWidth = displayMetrics.widthPixels;
+
+        ImageView preview = (ImageView) getFragmentManager().
+                findFragmentById(R.id.fragment_wrapper).
+                getView().
+                findViewById(R.id.image_captured_preview);
+
+        preview.setImageBitmap(CameraActivity.bitmap);
     }
 
     public void renderResult() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        int screenHeight = displayMetrics.heightPixels;
+        int screenWidth = displayMetrics.widthPixels;
+
         LinearLayout resultWrapper = (LinearLayout) getFragmentManager().
                 findFragmentById(R.id.fragment_wrapper).
                 getView().
                 findViewById(R.id.results_wrapper);
 
+        int[] id = new int[3];
+        id[0] = R.id.guess_1;
+        id[1] = R.id.guess_2;
+        id[2] = R.id.guess_3;
+
         int resultsCount = CameraActivity.results.size();
         for(int i=0; i<resultsCount; i++) {
             final Classifier.Recognition output = CameraActivity.results.get(i);
-            Button result = new Button(getActivity());
+            Button result = (Button) getFragmentManager().
+                    findFragmentById(R.id.fragment_wrapper).
+                    getView().
+                    findViewById(id[i]);
 
             result.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,12 +86,20 @@ public class ResultFragment extends Fragment {
                 }
             });
 
-            float confidence = output.getConfidence() * 100;
-            result.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            result.setText(output.getTitle() + " (" + confidence + ")");
-            resultWrapper.addView(result);
+            switch(i) {
+                case 0:
+                    result.getLayoutParams().width = (int) (screenWidth * 0.8);
+                    break;
+                case 1:
+                    result.getLayoutParams().width = (int) (screenWidth * 0.7);
+                    break;
+                case 2:
+                    result.getLayoutParams().width = (int) (screenWidth * 0.6);
+                    break;
+            }
+
+            int confidence = Math.round(output.getConfidence() * 100);
+            result.setText(output.getTitle() + " (" + confidence + "%)");
         }
     }
 
