@@ -48,6 +48,11 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onBackPressed() {
         if(fragmentManager.getBackStackEntryCount() != 0) {
             fragmentManager.popBackStack();

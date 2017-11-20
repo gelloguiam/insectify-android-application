@@ -2,6 +2,7 @@ package com.gelloguiam.insectrecognition;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.DisplayMetrics;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.List;
 import java.util.Locale;
 
 public class ResultFragment extends Fragment {
@@ -32,9 +34,6 @@ public class ResultFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceType) {
         super.onActivityCreated(savedInstanceType);
 
-        final Classifier.Recognition output = CameraActivity.results.get(0);
-        initializeTTS(output.getTitle(), Math.round(output.getConfidence() * 100));
-
         fixLayoutSize();
         renderResult();
     }
@@ -51,10 +50,13 @@ public class ResultFragment extends Fragment {
                 getView().
                 findViewById(R.id.image_captured_preview);
 
-        preview.setImageBitmap(CameraActivity.bitmap);
+        preview.setImageBitmap(ImageHelper.getRoundedImage(CameraActivity.bitmap, 1000));
     }
 
     public void renderResult() {
+        final List<Classifier.Recognition> results = CameraActivity.results;
+        initializeTTS(results.get(0).getTitle(), Math.round(results.get(0).getConfidence() * 100));
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
@@ -71,9 +73,11 @@ public class ResultFragment extends Fragment {
         id[1] = R.id.guess_2;
         id[2] = R.id.guess_3;
 
+        Typeface bebas = Typeface.createFromAsset(getActivity().getAssets(), "font/bebas.otf");
+
         int resultsCount = CameraActivity.results.size();
         for(int i=0; i<resultsCount; i++) {
-            final Classifier.Recognition output = CameraActivity.results.get(i);
+            final Classifier.Recognition label = results.get(i);
             Button result = (Button) getFragmentManager().
                     findFragmentById(R.id.fragment_wrapper).
                     getView().
@@ -82,24 +86,15 @@ public class ResultFragment extends Fragment {
             result.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openInsectWiki(output.getTitle());
+                    openInsectWiki(label.getTitle());
                 }
             });
 
-            switch(i) {
-                case 0:
-                    result.getLayoutParams().width = (int) (screenWidth * 0.8);
-                    break;
-                case 1:
-                    result.getLayoutParams().width = (int) (screenWidth * 0.7);
-                    break;
-                case 2:
-                    result.getLayoutParams().width = (int) (screenWidth * 0.6);
-                    break;
-            }
+            result.getLayoutParams().width = (int) (screenWidth * 0.6);
 
-            int confidence = Math.round(output.getConfidence() * 100);
-            result.setText(output.getTitle() + " (" + confidence + "%)");
+            int confidence = Math.round(label.getConfidence() * 100);
+            result.setText(label.getTitle() + " (" + confidence + "%)");
+            result.setTypeface(bebas);
         }
     }
 

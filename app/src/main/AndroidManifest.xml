@@ -16,20 +16,24 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CameraActivity"
-            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".CameraActivity"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".InsectWiki"
             android:label="@string/title_activity_insect_wiki"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".GalleryActivity"></activity>
     </application>
 
 </manifest>

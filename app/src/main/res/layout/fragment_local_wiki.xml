@@ -8,7 +8,7 @@
         android:id="@+id/local_wiki_title_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20px">
+        android:padding="20dp">
     <TextView
             android:id="@+id/local_wiki_title"
             android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:textAlignment="center"
             android:ems="15"
             android:textAllCaps="true"
-            android:textSize="32dp"
+            android:textSize="35sp"
             android:inputType="textCapSentences"
             android:text="Title"/>
     </FrameLayout>
@@ -25,7 +25,8 @@
         android:id="@+id/local_wiki_description_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20px"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:layout_below="@+id/local_wiki_title_wrapper">
         <TextView
             android:id="@+id/local_wiki_description"
@@ -33,24 +34,21 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:scrollbars = "vertical"
-            android:textSize="20dp"
-            android:text="description here" />
+            android:textSize="20sp"
+            android:text="description here"/>
     </FrameLayout>
 
     <ImageButton
         android:id="@+id/read_more"
-        android:layout_width="100px"
-        android:layout_height="100px"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="40px"
+        android:layout_margin="20dp"
         android:src="@drawable/wikipedia"
-        android:gravity="center"
+        android:scaleType="fitCenter"
         android:contentDescription="wikipedia"
-        android:foregroundGravity="center"
-        android:background="@null"
-        android:padding="0dp"
-        android:scaleType="centerInside"/>
+        android:background="@null" />
 
 </RelativeLayout>
